@@ -89,7 +89,7 @@ public class BoardPanel extends JPanel{
         }catch (IOException e){
         }
 
-        //Creates background from loaded image
+        //Creates background from loaded image.
         for(int x = 0; x < COL_COUNT; x++) {
             int xx = x* TILE_SIZE;
             for (int y = 0; y < ROW_COUNT; y++) {
