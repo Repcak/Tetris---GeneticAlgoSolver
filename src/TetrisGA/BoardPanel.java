@@ -78,26 +78,23 @@ public class BoardPanel extends JPanel{
             }
         }
 
-
-        /*
-		 * Draw the outline.
-		 */
+		 //Draw the outline
         g.setColor(Color.WHITE);
         g.drawRect(0, 0, TILE_SIZE * COL_COUNT, TILE_SIZE * ROW_COUNT);
 
-
+        //Loads up image from file for background(22x22 pix)
         BufferedImage img = null;
         try{
             img = ImageIO.read(new File("Tile2.png"));
         }catch (IOException e){
         }
 
+        //Creates background from loaded image
         for(int x = 0; x < COL_COUNT; x++) {
             int xx = x* TILE_SIZE;
             for (int y = 0; y < ROW_COUNT; y++) {
                 int yy = y * TILE_SIZE;
                 g.drawImage(img, xx, yy, null);
-
             }
         }
     }
