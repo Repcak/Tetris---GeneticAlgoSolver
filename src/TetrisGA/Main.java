@@ -6,6 +6,6 @@ public class Main {
 
         Tetris tetris = new Tetris();
         tetris.startGame();
-
+                //asdaffaf KOMMENT TESTOWY GWOZDO!@^$)^!$)PI:DN
     }
 }
