@@ -27,7 +27,7 @@ public class BoardPanel extends JPanel{
     /**
      * The number of visible rows on the board.
      */
-    private static final int ROW_COUNT = 20;
+    public static final int ROW_COUNT = 20;
 
     /**
      * The number of pixels that a tile takes up.
