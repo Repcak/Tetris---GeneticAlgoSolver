@@ -37,7 +37,7 @@ public class Tablica {
         for(int j=0;j<colCnt;j++){
             System.out.print(Tab[j][i]);
         }
-        System.out.println("");
+        System.out.println();
     }
 
 

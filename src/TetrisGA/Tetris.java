@@ -57,7 +57,7 @@ public class Tetris extends JFrame {
             side.repaint();
         }
     */
-        tet.retTetArr();
+        tet.getTetArray();
         //tab.drawTable();
     }
 }
