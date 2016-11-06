@@ -8,11 +8,15 @@ public class Tetris extends JFrame {
 
     private BoardPanel board;
     private SidePanel side;
-
+    private Tablica tab;
+    private Tetromino tet;
     public int score;
 
 
     public Tetris() {
+
+
+
 
 
 
@@ -27,7 +31,8 @@ public class Tetris extends JFrame {
 
         board = new BoardPanel();
         side = new SidePanel(this);
-
+        tab = new Tablica();
+        tet=new Tetromino();
 		/*
 		 * Add the BoardPanel and SidePanel instances to the window.
 		 */
@@ -39,9 +44,11 @@ public class Tetris extends JFrame {
 		setVisible(true);
 
 
+
     }
 
     public void startGame(){
+        /*
         this.score = 0;
 
         while(true){
@@ -49,6 +56,9 @@ public class Tetris extends JFrame {
             score++;
             side.repaint();
         }
+    */
+        tet.retTetArr();
+        //tab.drawTable();
     }
 }
 

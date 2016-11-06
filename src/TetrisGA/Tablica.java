@@ -11,19 +11,37 @@ public class Tablica {
     int[][] Tab = new int[colCnt][rowCnt];
 
     public Tablica() {
+        createTable();
+    }
 
     // "creating" array borders. value of 1 is for botto tiles, value of 3 is for leftside and 5 for rightside
-    for(int i=0;i<rowCnt ; i++){
-        Tab[0][i]=3;
-        Tab[rowCnt-1][i]=5;
-    }
-        for(int i=0;i<colCnt; i++){
-            Tab[i][rowCnt-1]=1;
+
+    private void createTable(){
+
+            // "creating" array borders. value of 1 is for botto tiles, value of 3 is for leftside and 5 for rightside
+            for(int i=0;i<rowCnt ; i++){
+                Tab[0][i]=3;
+                Tab[colCnt-1][i]=5;
+            }
+            for(int i=0;i<colCnt; i++){
+                Tab[i][rowCnt-1]=1;
+            }
 
         }
 
+
+
+
+    public void drawTable(){
+    for (int i=0;i<rowCnt;i++){
+        for(int j=0;j<colCnt;j++){
+            System.out.print(Tab[j][i]);
+        }
+        System.out.println("");
     }
 
 
+
+}
 
 }
