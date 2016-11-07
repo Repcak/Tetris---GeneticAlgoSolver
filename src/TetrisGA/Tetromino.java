@@ -54,13 +54,13 @@ public class Tetromino {
     public static int[][] rotateTetromino(int[][] array) {
         final int M = array.length;
         final int N = array[0].length;
-        int[][] ret = new int[N][M];
+        int[][] rotatedArray = new int[N][M];
         for (int r = 0; r < M; r++) {
             for (int c = 0; c < N; c++) {
-                ret[c][M-1-r] = array[r][c];
+                rotatedArray[c][M-1-r] = array[r][c];
             }
         }
-        return ret;
+        return rotatedArray;
     }
 
     // this method creates tetromino
