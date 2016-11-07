@@ -8,7 +8,7 @@ package TetrisGA;
  *  -printTetArray  - prints tetromino in console
  *  -rotateTetromino - rotates teromino array
  *  -getTetArray - returns tetArray
- *  -createTet - generates new Tetr..omino
+ *  -createTet - generates new Tetr..o.mino
  *
  */
 import java.util.Random;
