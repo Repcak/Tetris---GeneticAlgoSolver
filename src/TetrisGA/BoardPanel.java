@@ -50,7 +50,7 @@ public class BoardPanel extends JPanel {
     /**
      * The number of rows that are hidden from view.
      */
-    private static final int HIDDEN_ROW_COUNT = 2;
+    public static final int HIDDEN_ROW_COUNT = 2;
 
     /**
      * The total number of rows that the board contains.
@@ -100,12 +100,12 @@ public class BoardPanel extends JPanel {
     /**
      * The Tetris instance.
      */
-    private Tetris tetris;
+    public Tetris tetris;
 
     /**
      * The tiles that make up the board.
      */
-    private TileType[][] tiles;
+    public TileType[][] tiles;
 
     /**
      * Crates a new GameBoard instance.
@@ -113,7 +113,7 @@ public class BoardPanel extends JPanel {
      */
     public BoardPanel(Tetris tetris) {
         this.tetris = tetris;
-        this.tiles = new TileType[ROW_COUNT][COL_COUNT];
+        tiles = new TileType[ROW_COUNT][COL_COUNT];
 
         setPreferredSize(new Dimension(PANEL_WIDTH, PANEL_HEIGHT));
         setBackground(Color.BLACK);
@@ -272,7 +272,7 @@ public class BoardPanel extends JPanel {
      * @param y The row.
      * @return The tile.
      */
-    private TileType getTile(int x, int y) {
+    public TileType getTile(int x, int y) {
         return tiles[y][x];
     }
 

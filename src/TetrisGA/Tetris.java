@@ -33,7 +33,7 @@ public class Tetris extends JFrame {
     /**
      * The BoardPanel instance.
      */
-    private BoardPanel board;
+    public BoardPanel board;
 
     /**
      * The SidePanel instance.
@@ -106,26 +106,34 @@ public class Tetris extends JFrame {
     /**
      * The speed of the game.
      */
-    private float gameSpeed;
+    public float gameSpeed;
+
+
+
+
 
     /**
      * Creates a new Tetris instance. Sets up the window's properties,
      * and adds a controller listener.
      */
-    private Tetris() {
+    public Tetris() {
 		/*
 		 * Set the basic properties of the window.
 		 */
+
         super("Tetris");
         setLayout(new BorderLayout());
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setResizable(false);
 
+
 		/*
 		 * Initialize the BoardPanel and SidePanel instances.
 		 */
-        this.board = new BoardPanel(this);
-        this.side = new SidePanel(this);
+
+        board = new BoardPanel(this);
+        side = new SidePanel(this);
+
 
 		/*
 		 * Add the BoardPanel and SidePanel instances to the window.
@@ -275,6 +283,9 @@ public class Tetris extends JFrame {
         logicTimer.setPaused(true);
 
         while(true) {
+
+
+
             //Get the time that the frame started.
             long start = System.nanoTime();
 
@@ -293,6 +304,7 @@ public class Tetris extends JFrame {
             if(dropCooldown > 0) {
                 dropCooldown--;
             }
+
 
             //Display the window to the user.
             renderGame();
@@ -318,6 +330,7 @@ public class Tetris extends JFrame {
 		/*
 		 * Check to see if the piece's position can move down to the next row.
 		 */
+
         if(board.isValidAndEmpty(currentType, currentCol, currentRow + 1, currentRotation)) {
             //Increment the current row if it's safe to do so.
             currentRow++;
@@ -370,6 +383,11 @@ public class Tetris extends JFrame {
     private void renderGame() {
         board.repaint();
         side.repaint();
+
+    }
+
+    public void setGameSpeed(float gameSpeed) {
+        this.gameSpeed = gameSpeed;
     }
 
     /**
@@ -378,7 +396,7 @@ public class Tetris extends JFrame {
      */
     private void resetGame() {
         this.score = 0;
-        this.gameSpeed = 1.0f;
+        this.gameSpeed = 3.0f;
         this.nextType = TileType.values()[random.nextInt(TYPE_COUNT)];
         this.isNewGame = false;
         this.isGameOver = false;
@@ -543,9 +561,11 @@ public class Tetris extends JFrame {
      * game instance.
      * @param args Unused.
      */
-    public static void main(String[] args) {
+    public static void main(String[] args)  throws Exception {
+        Test test = new Test();
         Tetris tetris = new Tetris();
         tetris.startGame();
+
     }
 
 }
