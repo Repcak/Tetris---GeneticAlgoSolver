@@ -22,7 +22,7 @@ public class Tetromino {
         createTet(s.charAt(index));
     }
 
-// this method returns
+// this method prints generated tetromino
     public static int[][] getTetArray(){
         for(int i=0;i<arrXSize;i++){
             for (int j=0;j<arrYSize;j++){

@@ -17,8 +17,7 @@ public class Tablica {
     // "creating" array borders. value of 1 is for botto tiles, value of 3 is for leftside and 5 for rightside
 
     private void createTable(){
-
-            // "creating" array borders. value of 1 is for botto tiles, value of 3 is for leftside and 5 for rightside
+            // "creating" array borders. value of 1 is for bottom tiles, value of 3 is for leftside and 5 for rightside
             for(int i=0;i<rowCnt ; i++){
                 Tab[0][i]=3;
                 Tab[colCnt-1][i]=5;
@@ -31,15 +30,12 @@ public class Tablica {
 
 
     public void drawTable(){
-    for (int i=0;i<rowCnt;i++){
-        for(int j=0;j<colCnt;j++){
-            System.out.print(Tab[j][i]);
-        }
+        for (int i=0;i<rowCnt;i++){
+            for(int j=0;j<colCnt;j++){
+                System.out.print(Tab[j][i]);
+            }
         System.out.println();
+        }
     }
-
-
-
-}
 
 }
