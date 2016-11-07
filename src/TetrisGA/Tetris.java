@@ -3,7 +3,6 @@ package TetrisGA;
 import java.awt.BorderLayout;
 import javax.swing.*;
 
-
 public class Tetris extends JFrame {
 
     private BoardPanel board;
@@ -14,11 +13,6 @@ public class Tetris extends JFrame {
 
 
     public Tetris() {
-
-
-
-
-
 
 		/*
 		 * Set the basic properties of the window.
@@ -43,24 +37,17 @@ public class Tetris extends JFrame {
 		pack();
 		setVisible(true);
 
-
-
     }
 
     public void startGame(){
         /*
         this.score = 0;
-
         while(true){
-
             score++;
             side.repaint();
         }
-    */
+        */
 
-
-
-        //tab.drawTable();
     }
 }
 

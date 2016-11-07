@@ -20,7 +20,6 @@ public class Tablica {
     }
 
 
-
     // "creating" array borders. value of 1 is for botto tiles, value of 3 is for leftside and 5 for rightside
     private void createTable(){
         // "creating" array borders. value of 1 is for botto tiles, value of 3 is for leftside and 5 for rightside
