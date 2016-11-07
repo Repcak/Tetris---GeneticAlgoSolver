@@ -9,8 +9,8 @@ public class Tetromino {
 
     // tetArray contains tetromino's body representation
     private static int[][] tetArray = new int[4][4];
-    private static int arrXSize; // this value represents number of rows in newly generated tetromino
-    private static int arrYSize; // -||- but columns
+    public static int arrXSize; // this value represents number of rows in newly generated tetromino
+    public static int arrYSize; // -||- but columns
     private String s = "ZLTOI"; //char definitions of tetrominos
 
 // this method generates random letter that is representing type of tetromino, and passes this value
@@ -40,21 +40,23 @@ public class Tetromino {
    private  void createTet(char a){
         if(a=='Z'){
             tetArray= new int[][]{  {1,1,0},
-                                    {0,1,1}};
+                                    {0,1,1},
+                                    {0,0,0}};
             arrYSize=3;
-            arrXSize=2;
+            arrXSize=3;
         }
-        if(a=='L'){tetArray= new int[][]{   {1,0},
-                                            {1,0},
-                                            {1,1}};
-            arrYSize=2;
+        if(a=='L'){tetArray= new int[][]{   {1,0,0},
+                                            {1,1,1},
+                                            {0,0,0}};
+            arrYSize=3;
             arrXSize=3;
         }
 
-        if(a=='T'){tetArray= new int[][]{   {1,1,1},
-                                            {0,1,0}};
+        if(a=='T'){tetArray= new int[][]{   {0,1,0},
+                                            {1,1,1},
+                                            {0,0,0}};
             arrYSize=3;
-            arrXSize=2;}
+            arrXSize=3;}
 
         if(a=='O') {
             tetArray = new int[][]{  {1,1},
@@ -63,11 +65,11 @@ public class Tetromino {
             arrXSize=2;
         }
 
-        if(a=='I'){tetArray= new int[][]{   {1},
-                                            {1},
-                                            {1},
-                                            {1}};
-            arrYSize=1;
+        if(a=='I'){tetArray= new int[][]{   {0,0,0,0},
+                                            {1,1,1,1},
+                                            {0,0,0,0},
+                                            {0,0,0,0}};
+            arrYSize=4;
             arrXSize=4;
         }
 
