@@ -57,11 +57,6 @@ public class Tetris extends JFrame {
     private boolean isGameOver;
 
     /**
-     * The current level we're on.
-     */
-    private int level;
-
-    /**
      * The current score.
      */
     private int score;
@@ -347,7 +342,6 @@ public class Tetris extends JFrame {
 			 * Increase the speed slightly for the next piece and update the game's timer
 			 * to reflect the increase.
 			 */
-            gameSpeed += 0.035f;
             logicTimer.setCyclesPerSecond(gameSpeed);
             logicTimer.reset();
 
@@ -362,7 +356,6 @@ public class Tetris extends JFrame {
 			 * Update the difficulty level. This has no effect on the game, and is only
 			 * used in the "Level" string in the SidePanel.
 			 */
-            level = (int)(gameSpeed * 1.70f);
 
 			/*
 			 * Spawn a new piece to control.
@@ -384,7 +377,6 @@ public class Tetris extends JFrame {
      * of a new game.
      */
     private void resetGame() {
-        this.level = 1;
         this.score = 0;
         this.gameSpeed = 1.0f;
         this.nextType = TileType.values()[random.nextInt(TYPE_COUNT)];
@@ -504,14 +496,6 @@ public class Tetris extends JFrame {
      */
     public int getScore() {
         return score;
-    }
-
-    /**
-     * Gets the current level.
-     * @return The level.
-     */
-    public int getLevel() {
-        return level;
     }
 
     /**
