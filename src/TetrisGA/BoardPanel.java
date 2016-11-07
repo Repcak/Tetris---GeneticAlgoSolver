@@ -49,9 +49,11 @@ public class BoardPanel extends JPanel{
      */
     //private TileType[][] tiles;
 
+    private Tablica gameArray;
+
     public BoardPanel() {
 
-        //this.tiles = new TileType[ROW_COUNT][COL_COUNT];
+        this.gameArray = new Tablica();
 
         setPreferredSize(new Dimension(PANEL_WIDTH, PANEL_HEIGHT));
         setBackground(Color.WHITE);
@@ -83,9 +85,11 @@ public class BoardPanel extends JPanel{
         g.drawRect(0, 0, TILE_SIZE * COL_COUNT, TILE_SIZE * ROW_COUNT);
 
         //Loads up image from file for background(22x22 pix)
-        BufferedImage img = null;
+        BufferedImage backgroundImg = null;
+        BufferedImage tileImg = null;
         try{
-            img = ImageIO.read(new File("Tile2.png"));
+            backgroundImg = ImageIO.read(new File("Tile2.png"));
+            tileImg = ImageIO.read(new File("Tile4.png"));
         }catch (IOException e){
         }
 
@@ -94,7 +98,12 @@ public class BoardPanel extends JPanel{
             int cordX = x* TILE_SIZE;
             for (int y = 0; y < ROW_COUNT; y++) {
                 int cordY = y * TILE_SIZE;
-                g.drawImage(img, cordX, cordY, null);
+                if (gameArray.Tab[x+1][y] == 0){
+                    g.drawImage(backgroundImg, cordX, cordY, null);
+                }else if(gameArray.Tab[x+1][y] == 1){
+                    g.drawImage(tileImg, cordX, cordY, null);
+                }
+
             }
         }
     }

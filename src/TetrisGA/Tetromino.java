@@ -49,6 +49,7 @@ public class Tetromino {
 
     }
 
+
     // This method rotates tetromino right
     public static int[][] rotateTetromino(int[][] array) {
         final int M = array.length;
@@ -100,14 +101,4 @@ public class Tetromino {
         }
 
     }
-
-
-
-
-
-
-
-
-
-
 }
