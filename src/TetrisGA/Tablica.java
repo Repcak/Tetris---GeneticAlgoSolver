@@ -6,7 +6,7 @@ package TetrisGA;
  */
 
 public class Tablica {
-    public int rowCnt=BoardPanel.ROW_COUNT+1; // Y+1because of bottom border
+    public int rowCnt=BoardPanel.ROW_COUNT; // Y+1because of bottom border
     public int colCnt=BoardPanel.COL_COUNT+2; // X+2 because of side borders
     int[][] Tab = new int[colCnt][rowCnt];
 
@@ -23,9 +23,7 @@ public class Tablica {
                 Tab[0][i]=3;
                 Tab[colCnt-1][i]=5;
             }
-            for(int i=0;i<colCnt; i++){
-                Tab[i][rowCnt-1]=1;
-            }
+
 
         }
 

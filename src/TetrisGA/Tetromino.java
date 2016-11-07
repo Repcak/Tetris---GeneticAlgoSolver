@@ -2,6 +2,7 @@ package TetrisGA;
 
 /**
  * Created by Gwozdo on 11/6/2016.
+ * This class generates new Tetromino, and returns it's array.
  */
 import java.util.Random;
 public class Tetromino {
