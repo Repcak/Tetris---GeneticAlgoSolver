@@ -106,7 +106,7 @@ public class Tetris extends JFrame {
     /**
      * The speed of the game.
      */
-    public float gameSpeed;
+    public static float gameSpeed;
 
 
 
