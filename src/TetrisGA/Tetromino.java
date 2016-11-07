@@ -3,6 +3,13 @@ package TetrisGA;
 /**
  * Created by Gwozdo on 11/6/2016.
  * This class generates new Tetromino, and returns it's array.
+ *
+ *Contains methods:
+ *  -printTetArray  - prints tetromino in console
+ *  -rotateTetromino - rotates teromino array
+ *  -getTetArray - returns tetArray
+ *  -createTet - generates new Tetromino
+ *
  */
 import java.util.Random;
 public class Tetromino {
@@ -18,23 +25,42 @@ public class Tetromino {
     public Tetromino(){
         Random random = new Random();
         int index = random.nextInt(s.length());
-      //  System.out.println(index);
+
         createTet(s.charAt(index));
+
     }
 
-// this method prints generated tetromino
-    public static int[][] getTetArray(){
+// this method prints generated tetromino using system.out
+    private void printTetArray(){
         for(int i=0;i<arrXSize;i++){
             for (int j=0;j<arrYSize;j++){
                 System.out.print(tetArray[i][j]);
-            } System.out.println();
-        }
+            }System.out.println("");
+
+        }System.out.println("");
+
+    }
+
+    // this method returns tetArray
+    public static int[][] getTetArray(){
+
 
         return tetArray;
 
     }
 
-
+    // This method rotates tetromino right
+    public static int[][] rotateTetromino(int[][] array) {
+        final int M = array.length;
+        final int N = array[0].length;
+        int[][] ret = new int[N][M];
+        for (int r = 0; r < M; r++) {
+            for (int c = 0; c < N; c++) {
+                ret[c][M-1-r] = array[r][c];
+            }
+        }
+        return ret;
+    }
 
     // this method creates tetromino
    private  void createTet(char a){
