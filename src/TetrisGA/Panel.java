@@ -24,8 +24,8 @@ public class Panel extends JPanel {
         text.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Tetris.gameSpeed=Float.parseFloat(text.getText());
-                System.out.println(Tetris.gameSpeed);
+                Tetris.setGameSpeed(Float.parseFloat(text.getText()));
+                System.out.println(Tetris.getGameSpeed());
             }
         });
         add(text);

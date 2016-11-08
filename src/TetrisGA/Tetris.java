@@ -23,7 +23,7 @@ public class Tetris extends JFrame {
     /**
      * The number of milliseconds per frame.
      */
-    private static final long FRAME_TIME = 1000L / 50L;
+    private static final long FRAME_TIME = 500L / 30L;
 
     /**
      * The number of pieces that exist.
@@ -106,11 +106,7 @@ public class Tetris extends JFrame {
     /**
      * The speed of the game.
      */
-    public static float gameSpeed;
-
-
-
-
+    private static float gameSpeed;
 
     /**
      * Creates a new Tetris instance. Sets up the window's properties,
@@ -273,7 +269,7 @@ public class Tetris extends JFrame {
 		 */
         this.random = new Random();
         this.isNewGame = true;
-        this.gameSpeed = 1.0f;
+        this.gameSpeed = 0.001f;
 
 		/*
 		 * Setup the timer to keep the game from running before the user presses enter
@@ -386,8 +382,12 @@ public class Tetris extends JFrame {
 
     }
 
-    public void setGameSpeed(float gameSpeed) {
-        this.gameSpeed = gameSpeed;
+    public static void setGameSpeed(float gs) {
+        gameSpeed = gs;
+    }
+
+    public static float getGameSpeed() {
+        return gameSpeed;
     }
 
     /**
@@ -396,7 +396,7 @@ public class Tetris extends JFrame {
      */
     private void resetGame() {
         this.score = 0;
-        this.gameSpeed = 3.0f;
+        //this.gameSpeed = 3.0f;
         this.nextType = TileType.values()[random.nextInt(TYPE_COUNT)];
         this.isNewGame = false;
         this.isGameOver = false;

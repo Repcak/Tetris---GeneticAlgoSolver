@@ -48,7 +48,7 @@ public class Clock {
      * @param cyclesPerSecond The number of cycles per second.
      */
     public void setCyclesPerSecond(float cyclesPerSecond) {
-        this.millisPerCycle = (1.0f / cyclesPerSecond) * 1000;
+        this.millisPerCycle = (1.0f / cyclesPerSecond) * 1;
     }
 
     /**
