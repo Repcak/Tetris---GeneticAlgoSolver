@@ -3,6 +3,8 @@ package TetrisGA;
 import javax.swing.*;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  * Created by XXX on 07.11.2016.
@@ -19,7 +21,13 @@ public class Panel extends JPanel {
         setBackground(Color.WHITE);
 
         JTextField text = new JTextField(20);
-
+        text.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Tetris.setGameSpeed(Float.parseFloat(text.getText()));
+                System.out.println(Tetris.getGameSpeed());
+            }
+        });
         add(text);
 
 
