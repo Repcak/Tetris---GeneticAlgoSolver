@@ -7,7 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 /**
- * Created by XXX on 07.11.2016.
+ * Created by XXX on 07.11.2016
  */
 public class Panel extends JPanel {
 
