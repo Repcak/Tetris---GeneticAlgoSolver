@@ -1,5 +1,7 @@
 package TetrisGA;
 
+import com.sun.deploy.uitoolkit.ui.ConsoleController;
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -97,6 +99,7 @@ public class BoardPanel extends JPanel {
      */
     private static final Font SMALL_FONT = new Font("Tahoma", Font.BOLD, 12);
 
+    public static Integer[][] tablica;
     /**
      * The Tetris instance.
      */
@@ -113,7 +116,12 @@ public class BoardPanel extends JPanel {
      */
     public BoardPanel(Tetris tetris) {
         this.tetris = tetris;
+        ////
         tiles = new TileType[ROW_COUNT][COL_COUNT];
+
+        tablica = new Integer[ROW_COUNT+HIDDEN_ROW_COUNT][COL_COUNT];
+
+
 
         setPreferredSize(new Dimension(PANEL_WIDTH, PANEL_HEIGHT));
         setBackground(Color.BLACK);
@@ -310,14 +318,31 @@ public class BoardPanel extends JPanel {
 			/*
 			 * Draw the tiles onto the board.
 			 */
+
+
             for(int x = 0; x < COL_COUNT; x++) {
+
                 for(int y = HIDDEN_ROW_COUNT; y < ROW_COUNT; y++) {
                     TileType tile = getTile(x, y);
                     if(tile != null) {
                         drawTile(tile, x * TILE_SIZE, (y - HIDDEN_ROW_COUNT) * TILE_SIZE, g);
+//dodanie do tablicy normalnych klockow
+                        tablica[y][x]=1;
+                        //System.out.print(tablica[x][y] + " ");
+
+                    }else{
+//wpisanie do tablicy zer jezeli nie ma klocka
+                        tablica[y][x]=0;
+
+
+
                     }
+
+
                 }
             }
+
+
 
 			/*
 			 * Draw the current piece. This cannot be drawn like the rest of the
@@ -335,6 +360,7 @@ public class BoardPanel extends JPanel {
                 for(int row = 0; row < type.getDimension(); row++) {
                     if(pieceRow + row >= 2 && type.isTile(col, row, rotation)) {
                         drawTile(type, (pieceCol + col) * TILE_SIZE, (pieceRow + row - HIDDEN_ROW_COUNT) * TILE_SIZE, g);
+
                     }
                 }
             }
@@ -360,10 +386,21 @@ public class BoardPanel extends JPanel {
                     for(int row = 0; row < type.getDimension(); row++) {
                         if(lowest + row >= 2 && type.isTile(col, row, rotation)) {
                             drawTile(base, base.brighter(), base.darker(), (pieceCol + col) * TILE_SIZE, (lowest + row - HIDDEN_ROW_COUNT) * TILE_SIZE, g);
+// dopisanie do tablicy ghost klockow
+                            tablica[lowest + row][pieceCol + col]=2;
                         }
                     }
                 }
 
+                //WYRYSOWANIE tablicy
+                System.out.println();
+                for(int y = HIDDEN_ROW_COUNT; y < ROW_COUNT; y++) {
+                    for(int x = 0; x < COL_COUNT; x++) {
+
+                        System.out.print(tablica[y][x] + " ");
+
+                    }System.out.println();
+                }
                 break;
             }
 
