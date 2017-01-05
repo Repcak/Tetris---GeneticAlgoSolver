@@ -21,6 +21,8 @@ public class Panel extends JPanel {
         setBackground(Color.WHITE);
 
         JTextField text = new JTextField(20);
+        text.setText("10");
+
         text.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
