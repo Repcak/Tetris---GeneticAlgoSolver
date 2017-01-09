@@ -431,6 +431,16 @@ public class Tetris extends JFrame {
 		 * their default variables, then pick the next piece to use.
 		 */
         this.currentType = nextType;
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // sprawdzanie czy klocek moze byc normalnie wygenerowany
+        // jak nie to konczy gre. jak tak to konczy generowanie klocka i odpala bruta
+        for(int c=0;c<7;c++){
+            if(!board.isValidAndEmpty(currentType, c, 2, currentRotation)) {
+                this.isGameOver = true;
+                logicTimer.setPaused(true);
+            }
+        }
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////
         this.currentCol = currentType.getSpawnColumn();
         this.currentRow = currentType.getSpawnRow();
         this.currentRotation = 0;
@@ -439,18 +449,15 @@ public class Tetris extends JFrame {
 		/*
 		 * If the spawn point is invalid, we need to pause the game and flag that we've lost
 		 * because it means that the pieces on the board have gotten too high.
-		 */
-		for(int c=0;c<7;c++){
-        if(!board.isValidAndEmpty(currentType, c, 2, currentRotation)) {
-            this.isGameOver = true;
-            logicTimer.setPaused(true);
-        }
-    }
+         */
+
+
+
         bruteForce();
 
     }
 
-//
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /**
      * Attempts to move piece to every possible column with every possible rotation.
      */
@@ -466,9 +473,9 @@ private boolean canMoveRight(){
 
 private void bruteForce() {
 
-        for (int przejscia = 0; przejscia < 4; przejscia++) {
+        for (int Rotacje = 0; Rotacje < 4; Rotacje++) {
 
-            currentRotation = przejscia;
+            currentRotation = Rotacje;
             currentCol=0;
             while (canMoveRight()) {
 
@@ -485,7 +492,7 @@ private void bruteForce() {
 
 
 }
-
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     /**
      * Attempts to set the rotation of the current piece to newRotation.
