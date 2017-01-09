@@ -374,7 +374,7 @@ public class Tetris extends JFrame {
 			 * in from the heavens immediately after this piece hits if we've not reacted
 			 * yet. (~0.5 second buffer).
 			 */
-            dropCooldown = 1;
+            dropCooldown = 0;
 
 			/*
 			 * Update the difficulty level. This has no effect on the game, and is only
