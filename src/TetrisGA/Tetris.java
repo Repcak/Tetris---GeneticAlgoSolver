@@ -4,7 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.Random;
-
+import java.util.Scanner;
 import javax.swing.JFrame;
 
 /**
@@ -152,9 +152,22 @@ public class Tetris extends JFrame {
 				 * paused and that there is no drop cooldown, then set the
 				 * logic timer to run at a speed of 25 cycles per second.
 				 */
+
+
                     case KeyEvent.VK_S:
                         if(!isPaused && dropCooldown == 0) {
-                            logicTimer.setCyclesPerSecond(25.0f);
+                            logicTimer.setCyclesPerSecond(250.0f);
+                            boolean notOnBottom=true;
+                            while(notOnBottom)
+                            {
+                                if(board.isValidAndEmpty(currentType, currentCol, currentRow + 1, currentRotation)) {
+                                    //Increment the current row if it's safe to do so.
+                                    currentRow++;
+                                } else {
+                                notOnBottom=false;
+                                }
+                            }
+
                         }
                         break;
 
@@ -166,6 +179,8 @@ public class Tetris extends JFrame {
                     case KeyEvent.VK_A:
                         if(!isPaused && board.isValidAndEmpty(currentType, currentCol - 1, currentRow, currentRotation)) {
                             currentCol--;
+
+
                         }
                         break;
 
@@ -329,7 +344,7 @@ public class Tetris extends JFrame {
 
         if(board.isValidAndEmpty(currentType, currentCol, currentRow + 1, currentRotation)) {
             //Increment the current row if it's safe to do so.
-            currentRow++;
+           //currentRow++;
         } else {
 			/*
 			 * We've either reached the bottom of the board, or landed on another piece, so
@@ -359,7 +374,7 @@ public class Tetris extends JFrame {
 			 * in from the heavens immediately after this piece hits if we've not reacted
 			 * yet. (~0.5 second buffer).
 			 */
-            dropCooldown = 25;
+            dropCooldown = 1;
 
 			/*
 			 * Update the difficulty level. This has no effect on the game, and is only
@@ -425,11 +440,52 @@ public class Tetris extends JFrame {
 		 * If the spawn point is invalid, we need to pause the game and flag that we've lost
 		 * because it means that the pieces on the board have gotten too high.
 		 */
-        if(!board.isValidAndEmpty(currentType, currentCol, currentRow, currentRotation)) {
+		for(int c=0;c<7;c++){
+        if(!board.isValidAndEmpty(currentType, c, 2, currentRotation)) {
             this.isGameOver = true;
             logicTimer.setPaused(true);
         }
     }
+        bruteForce();
+
+    }
+
+//
+    /**
+     * Attempts to move piece to every possible column with every possible rotation.
+     */
+private boolean canMoveRight(){
+
+    if(!isPaused && board.isValidAndEmpty(currentType, currentCol + 1, currentRow, currentRotation)) {
+
+        return true;
+    }else {return false;
+    }
+}
+
+
+private void bruteForce() {
+
+        for (int przejscia = 0; przejscia < 4; przejscia++) {
+
+            currentRotation = przejscia;
+            currentCol=0;
+            while (canMoveRight()) {
+
+                currentCol++;
+
+
+
+        }
+
+        currentRotation = 0;
+        currentCol=0;
+
+    }
+
+
+}
+
 
     /**
      * Attempts to set the rotation of the current piece to newRotation.

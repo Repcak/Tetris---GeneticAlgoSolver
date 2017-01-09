@@ -22,6 +22,12 @@ public class BoardPanel extends JPanel {
      */
     private static final long serialVersionUID = 5055679736784226108L;
 
+ ///
+    public static int ghostX;
+    public static int ghostY;
+
+
+    ///
     /**
      * Minimum color component values for tiles. This is required if we
      * want to show both light and dark shading on our tiles.
@@ -158,7 +164,7 @@ public class BoardPanel extends JPanel {
         }
 
         //Ensure the piece is in a valid row.
-        if(y < -type.getTopInset(rotation) || y + type.getDimension() - type.getBottomInset(rotation) >= ROW_COUNT) {
+       if(y < -type.getTopInset(rotation) || y + type.getDimension() - type.getBottomInset(rotation) >= ROW_COUNT) {
             return false;
         }
 
@@ -388,9 +394,13 @@ public class BoardPanel extends JPanel {
                             drawTile(base, base.brighter(), base.darker(), (pieceCol + col) * TILE_SIZE, (lowest + row - HIDDEN_ROW_COUNT) * TILE_SIZE, g);
 // dopisanie do tablicy ghost klockow
                             tablica[lowest + row][pieceCol + col]=2;
+
+                            ghostX=pieceCol + col -2;
+                            ghostY=lowest + row - HIDDEN_ROW_COUNT +1 ;
                         }
                     }
                 }
+
 
                 //WYRYSOWANIE tablicy
                 System.out.println();
@@ -401,6 +411,8 @@ public class BoardPanel extends JPanel {
 
                     }System.out.println();
                 }
+                System.out.println(ghostX);
+                System.out.println(ghostY);
                 break;
             }
 
