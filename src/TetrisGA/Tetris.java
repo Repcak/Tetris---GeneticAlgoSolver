@@ -23,7 +23,7 @@ public class Tetris extends JFrame {
     private double bestPoints;
 
     private int ghostRow;
-
+    boolean testMode = false;
 
 
 
@@ -455,9 +455,13 @@ public class Tetris extends JFrame {
                     for(int j = 0; j < 21; j++) {
                     BoardPanel.tablica[j][i]=0;
                     }}
+
                 this.isGameOver = true;
                 logicTimer.setPaused(true);
 
+                System.out.println("score: "+ getScore());
+               // startGame();
+                resetGame();
             }
         }
         ///////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -472,7 +476,7 @@ public class Tetris extends JFrame {
          */
 
 
-        System.out.println("rozpoczynam brute forcowanie");
+
 
         bestPoints=-999999999;
         bestRotation=0;
@@ -536,11 +540,16 @@ private boolean canMoveRight(){
 
 
 private void bruteForce() {
-    for (int i=0; i<100;i++){ System.out.println();}
+
+
+    if(testMode == true) {
+        for (int i=0; i<100;i++){
+            if(testMode == true) System.out.println();}
+    }
 
 
     for (int Rotacje = 0; Rotacje < 4; Rotacje++) {
-        System.out.println("rotated" + currentRotation);
+        if(testMode == true)  System.out.println("rotated" + currentRotation);
         currentRotation = Rotacje;
         while(canMoveLeft()){currentCol-=1;}
 
@@ -548,10 +557,13 @@ private void bruteForce() {
 
 
         while (canMoveRight()) {
+            if(testMode == true)  System.out.println("==================================================================================" );
+            if(testMode == true)   System.out.println("==================================================================================" );
+            if(testMode == true)    System.out.println("==================================================================================" );
 
             currentCol++;
 
-            System.out.println("moved right" + currentCol + " rota " + currentRotation);
+            if(testMode == true) System.out.println("moved right" + currentCol + " rota " + currentRotation);
 
             for (int x = 0; x < BoardPanel.COL_COUNT; x++) {
 
@@ -571,8 +583,8 @@ private void bruteForce() {
                     }
                 }
             }
-            System.out.println("dopisalem klocki " + currentRow );
-            System.out.println("dimenszyn  " + BoardPanel.ghostX);
+            if(testMode == true) System.out.println("dopisalem klocki " + currentRow );
+            if(testMode == true)  System.out.println("dimenszyn  " + BoardPanel.ghostX);
 
             ghostRow=0;
             while(canMoveDown()){
@@ -580,7 +592,7 @@ private void bruteForce() {
 
 
             }
-            System.out.println("ROW  " + ghostRow);
+            if(testMode == true) System.out.println("ROW  " + ghostRow);
             for(int col = 0; col < currentType.getDimension(); col++) {
                 for(int row = 0; row < currentType.getDimension(); row++) {
 
@@ -597,22 +609,22 @@ private void bruteForce() {
 
 
 
-            System.out.println("dopisalem ghosta");
-                System.out.println();
+            if(testMode == true)   System.out.println("dopisalem ghosta");
+            if(testMode == true) System.out.println();
                 for (int y = BoardPanel.HIDDEN_ROW_COUNT; y < BoardPanel.ROW_COUNT; y++) {
                     for (int x = 0; x < BoardPanel.COL_COUNT; x++) {
 
-                        System.out.print(BoardPanel.tablica[y][x] + " ");
+                        if(testMode == true)    System.out.print(BoardPanel.tablica[y][x] + " ");
 
                     }
-                    System.out.println();
+                    if(testMode == true) System.out.println();
                 }
 
                                                         // row / col
-            System.out.println("punkty dla tego ruchu : "+ BoardPanel.calculatePoints(BoardPanel.tablica) );
+            if(testMode == true)            System.out.println("punkty dla tego ruchu : "+ BoardPanel.calculatePoints(BoardPanel.tablica) );
 
-            System.out.println("==================================================================================" );
-            System.out.println("old points "+bestPoints);
+            if(testMode == true)           System.out.println("==================================================================================" );
+            if(testMode == true)       System.out.println("old points "+bestPoints);
                 if (BoardPanel.calculatePoints(BoardPanel.tablica)>=bestPoints){
                    bestPoints=BoardPanel.calculatePoints(BoardPanel.tablica);
                     bestXpos=currentCol;
@@ -620,7 +632,7 @@ private void bruteForce() {
 
 
                 }
-            System.out.println("new points "+bestPoints);
+            if(testMode == true)           System.out.println("new points "+bestPoints);
             }
 
          //   currentRotation = 0;
@@ -630,7 +642,7 @@ private void bruteForce() {
         }
         currentCol=bestXpos;
         currentRotation=bestRotation;
-        System.out.println("finished, best x="+ bestXpos + "best rota=" + bestRotation);
+ if(testMode == true)       System.out.println("finished, best x="+ bestXpos + "best rota=" + bestRotation);
 
 
 
@@ -638,7 +650,8 @@ private void bruteForce() {
 
 
 
-    }
+
+}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

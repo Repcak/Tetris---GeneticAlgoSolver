@@ -348,14 +348,6 @@ public class BoardPanel extends JPanel {
                     TileType tile = getTile(x, y);
                     if(tile != null) {
                         drawTile(tile, x * TILE_SIZE, (y - HIDDEN_ROW_COUNT) * TILE_SIZE, g);
-//dodanie do tablicy normalnych klockow
-                       // tablica[y][x]=1;
-                        //System.out.print(tablica[x][y] + " ");
-
-                    }else{
-//wpisanie do tablicy zer jezeli nie ma klocka
-                       // tablica[y][x]=0;
-
 
 
                     }
@@ -408,27 +400,14 @@ public class BoardPanel extends JPanel {
                     for(int row = 0; row < type.getDimension(); row++) {
                         if(lowest + row >= 2 && type.isTile(col, row, rotation)) {
                             drawTile(base, base.brighter(), base.darker(), (pieceCol + col) * TILE_SIZE, (lowest + row - HIDDEN_ROW_COUNT) * TILE_SIZE, g);
-// dopisanie do tablicy ghost klockow
-                           // tablica[lowest + row][pieceCol + col]=2;
 
-                            ghostX=pieceCol + col -2;
-                            ghostY=lowest + row - HIDDEN_ROW_COUNT +1 ;
                         }
                     }
                 }
 
 
-                //WYRYSOWANIE tablicy
-               // System.out.println();
-                for(int y = HIDDEN_ROW_COUNT; y < ROW_COUNT; y++) {
-                    for(int x = 0; x < COL_COUNT; x++) {
 
-                        //System.out.print(tablica[y][x] + " ");
 
-                    }//System.out.println();
-                }
-               // System.out.println(ghostX);
-               // System.out.println(ghostY);
                 break;
             }
 
@@ -519,9 +498,10 @@ public class BoardPanel extends JPanel {
                     height = height+ 22-j;
 
                 }
-        System.out.println("height: "+height);
 
-    }}return height;}
+
+    }}//System.out.println("height: "+height);
+        return height;}
 
     public static int calculateLines(int tab[][]) {
         int clearedLines = 0;
@@ -557,6 +537,26 @@ public class BoardPanel extends JPanel {
             }
        // System.out.println(holesCounter);
         return holesCounter;
+    }
+
+
+
+
+    private static int calculateBlockades(int tab[][]) {
+        int blockadesCounter = 0;
+        for(int i = 0; i < 10; i++)
+            for(int j = 0; j < 21; j++) {
+                if(tab[j][i] != 0 && tab[j+1][i] == 0) {
+                    while(tab[j+1][i] == 0) {
+
+                        //holesCounter++;
+                        j++;
+                        if (j == 21) {break;}
+                    }
+                }
+            }
+        // System.out.println(holesCounter);
+        return blockadesCounter;
     }
 
 
