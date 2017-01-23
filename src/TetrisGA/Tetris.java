@@ -7,6 +7,7 @@ import java.util.Random;
 import java.util.Scanner;
 import javax.swing.JFrame;
 
+
 /**
  * The {@code Tetris} class is responsible for handling much of the game logic and
  * reading user input.
@@ -15,10 +16,23 @@ import javax.swing.JFrame;
  */
 public class Tetris extends JFrame {
 
+
+
+    private int bestRotation;
+    private int bestXpos;
+    private double bestPoints;
+
+    private int ghostRow;
+
+
+
+
+
     /**
      * The Serial Version UID.
      */
     private static final long serialVersionUID = -4722429764792514382L;
+
 
     /**
      * The number of milliseconds per frame.
@@ -431,13 +445,19 @@ public class Tetris extends JFrame {
 		 * their default variables, then pick the next piece to use.
 		 */
         this.currentType = nextType;
-        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////       ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // sprawdzanie czy klocek moze byc normalnie wygenerowany
         // jak nie to konczy gre. jak tak to konczy generowanie klocka i odpala bruta
-        for(int c=0;c<7;c++){
-            if(!board.isValidAndEmpty(currentType, c, 2, currentRotation)) {
+        for(int c=0;c<10;c++){
+            if(BoardPanel.tablica[4][c]!=0) {
+
+                for(int i = 0; i < 10; i++){
+                    for(int j = 0; j < 21; j++) {
+                    BoardPanel.tablica[j][i]=0;
+                    }}
                 this.isGameOver = true;
                 logicTimer.setPaused(true);
+
             }
         }
         ///////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -452,8 +472,34 @@ public class Tetris extends JFrame {
          */
 
 
+        System.out.println("rozpoczynam brute forcowanie");
 
+        bestPoints=-999999999;
+        bestRotation=0;
+        bestXpos=0;
         bruteForce();
+
+
+        if(!isPaused && dropCooldown == 0) {
+            logicTimer.setCyclesPerSecond(250.0f);
+            boolean notOnBottom=true;
+            while(notOnBottom)
+            {
+                if(board.isValidAndEmpty(currentType, currentCol, currentRow + 1, currentRotation)) {
+                    //Increment the current row if it's safe to do so.
+                    currentRow++;
+                } else {
+                    notOnBottom=false;
+                }
+            }
+
+        }
+
+
+
+
+
+
 
     }
 
@@ -470,28 +516,130 @@ private boolean canMoveRight(){
     }
 }
 
+    private boolean canMoveDown(){
 
-private void bruteForce() {
+        if(!isPaused && board.isValidAndEmpty(currentType, currentCol , ghostRow, currentRotation)) {
 
-        for (int Rotacje = 0; Rotacje < 4; Rotacje++) {
-
-            currentRotation = Rotacje;
-            currentCol=0;
-            while (canMoveRight()) {
-
-                currentCol++;
-
-
-
+            return true;
+        }else {return false;
         }
+    }
 
-        currentRotation = 0;
-        currentCol=0;
+    private boolean canMoveLeft(){
 
+        if(!isPaused && board.isValidAndEmpty(currentType, currentCol-1 , currentRow, currentRotation)) {
+
+            return true;
+        }else {return false;
+        }
     }
 
 
-}
+private void bruteForce() {
+    for (int i=0; i<100;i++){ System.out.println();}
+
+
+    for (int Rotacje = 0; Rotacje < 4; Rotacje++) {
+        System.out.println("rotated" + currentRotation);
+        currentRotation = Rotacje;
+        while(canMoveLeft()){currentCol-=1;}
+
+        currentCol-=1;
+
+
+        while (canMoveRight()) {
+
+            currentCol++;
+
+            System.out.println("moved right" + currentCol + " rota " + currentRotation);
+
+            for (int x = 0; x < BoardPanel.COL_COUNT; x++) {
+
+                for (int y = BoardPanel.HIDDEN_ROW_COUNT; y < BoardPanel.ROW_COUNT; y++) {
+                    TileType tile = BoardPanel.getTile(x, y);
+                    if (tile != null) {
+
+//dodanie do tablicy normalnych klockow
+                        BoardPanel.tablica[y][x] = 1;
+                        //System.out.print(tablica[x][y] + " ");
+
+                    } else {
+//wpisanie do tablicy zer jezeli nie ma klocka
+                        BoardPanel.tablica[y][x] = 0;
+
+
+                    }
+                }
+            }
+            System.out.println("dopisalem klocki " + currentRow );
+            System.out.println("dimenszyn  " + BoardPanel.ghostX);
+
+            ghostRow=0;
+            while(canMoveDown()){
+                ghostRow+=1;
+
+
+            }
+            System.out.println("ROW  " + ghostRow);
+            for(int col = 0; col < currentType.getDimension(); col++) {
+                for(int row = 0; row < currentType.getDimension(); row++) {
+
+
+                    if( currentType.isTile(col, row, currentRotation)) {
+
+// dopisanie do tablicy ghost klockow
+                        //                 row / col
+                        BoardPanel.tablica[ghostRow -1 + row][currentCol+col] = 2;
+                    }
+                }}
+
+
+
+
+
+            System.out.println("dopisalem ghosta");
+                System.out.println();
+                for (int y = BoardPanel.HIDDEN_ROW_COUNT; y < BoardPanel.ROW_COUNT; y++) {
+                    for (int x = 0; x < BoardPanel.COL_COUNT; x++) {
+
+                        System.out.print(BoardPanel.tablica[y][x] + " ");
+
+                    }
+                    System.out.println();
+                }
+
+                                                        // row / col
+            System.out.println("punkty dla tego ruchu : "+ BoardPanel.calculatePoints(BoardPanel.tablica) );
+
+            System.out.println("==================================================================================" );
+            System.out.println("old points "+bestPoints);
+                if (BoardPanel.calculatePoints(BoardPanel.tablica)>=bestPoints){
+                   bestPoints=BoardPanel.calculatePoints(BoardPanel.tablica);
+                    bestXpos=currentCol;
+                    bestRotation=currentRotation;
+
+
+                }
+            System.out.println("new points "+bestPoints);
+            }
+
+         //   currentRotation = 0;
+        //currentCol=0;
+        //while(canMoveLeft()){currentCol-=1;}
+
+        }
+        currentCol=bestXpos;
+        currentRotation=bestRotation;
+        System.out.println("finished, best x="+ bestXpos + "best rota=" + bestRotation);
+
+
+
+
+
+
+
+    }
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     /**

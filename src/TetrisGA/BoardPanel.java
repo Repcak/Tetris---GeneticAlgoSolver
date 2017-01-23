@@ -27,6 +27,22 @@ public class BoardPanel extends JPanel {
     public static int ghostY;
 
 
+    private static double calculatedHeight;
+    private static double calculatedLines;
+    private static double calculatedHoles;
+    private static double points;
+    private static double heightWeight;
+    private static double linesWeight;
+    private static double holesWeight;
+
+
+    static int pieceCol ;
+    static int pieceRow ;
+    static int rotation ;
+
+
+
+
     ///
     /**
      * Minimum color component values for tiles. This is required if we
@@ -105,16 +121,16 @@ public class BoardPanel extends JPanel {
      */
     private static final Font SMALL_FONT = new Font("Tahoma", Font.BOLD, 12);
 
-    public static Integer[][] tablica;
+    public static int[][] tablica;
     /**
      * The Tetris instance.
      */
-    public Tetris tetris;
+    static public Tetris tetris;
 
     /**
      * The tiles that make up the board.
      */
-    public TileType[][] tiles;
+    public static TileType[][] tiles;
 
     /**
      * Crates a new GameBoard instance.
@@ -125,7 +141,7 @@ public class BoardPanel extends JPanel {
         ////
         tiles = new TileType[ROW_COUNT][COL_COUNT];
 
-        tablica = new Integer[ROW_COUNT+HIDDEN_ROW_COUNT][COL_COUNT];
+        tablica = new int[ROW_COUNT+HIDDEN_ROW_COUNT][COL_COUNT];
 
 
 
@@ -156,7 +172,7 @@ public class BoardPanel extends JPanel {
      * @param rotation The rotation of the piece.
      * @return Whether or not the position is valid.
      */
-    public boolean isValidAndEmpty(TileType type, int x, int y, int rotation) {
+    public static boolean isValidAndEmpty(TileType type, int x, int y, int rotation) {
 
         //Ensure the piece is in a valid column.
         if(x < -type.getLeftInset(rotation) || x + type.getDimension() - type.getRightInset(rotation) >= COL_COUNT) {
@@ -266,7 +282,7 @@ public class BoardPanel extends JPanel {
      * @param y The y coordinate to check.
      * @return Whether or not the tile is occupied.
      */
-    private boolean isOccupied(int x, int y) {
+    private static boolean isOccupied(int x, int y) {
         return tiles[y][x] != null;
     }
 
@@ -286,7 +302,7 @@ public class BoardPanel extends JPanel {
      * @param y The row.
      * @return The tile.
      */
-    public TileType getTile(int x, int y) {
+    public static TileType getTile(int x, int y) {
         return tiles[y][x];
     }
 
@@ -333,12 +349,12 @@ public class BoardPanel extends JPanel {
                     if(tile != null) {
                         drawTile(tile, x * TILE_SIZE, (y - HIDDEN_ROW_COUNT) * TILE_SIZE, g);
 //dodanie do tablicy normalnych klockow
-                        tablica[y][x]=1;
+                       // tablica[y][x]=1;
                         //System.out.print(tablica[x][y] + " ");
 
                     }else{
 //wpisanie do tablicy zer jezeli nie ma klocka
-                        tablica[y][x]=0;
+                       // tablica[y][x]=0;
 
 
 
@@ -356,10 +372,10 @@ public class BoardPanel extends JPanel {
 			 * part of the board, it would need to be removed every frame which
 			 * would just be slow and confusing.
 			 */
-            TileType type = tetris.getPieceType();
-            int pieceCol = tetris.getPieceCol();
-            int pieceRow = tetris.getPieceRow();
-            int rotation = tetris.getPieceRotation();
+             TileType type = tetris.getPieceType();
+            pieceCol = tetris.getPieceCol();
+              pieceRow = tetris.getPieceRow();
+              rotation = tetris.getPieceRotation();
 
             //Draw the piece onto the board.
             for(int col = 0; col < type.getDimension(); col++) {
@@ -393,7 +409,7 @@ public class BoardPanel extends JPanel {
                         if(lowest + row >= 2 && type.isTile(col, row, rotation)) {
                             drawTile(base, base.brighter(), base.darker(), (pieceCol + col) * TILE_SIZE, (lowest + row - HIDDEN_ROW_COUNT) * TILE_SIZE, g);
 // dopisanie do tablicy ghost klockow
-                            tablica[lowest + row][pieceCol + col]=2;
+                           // tablica[lowest + row][pieceCol + col]=2;
 
                             ghostX=pieceCol + col -2;
                             ghostY=lowest + row - HIDDEN_ROW_COUNT +1 ;
@@ -403,16 +419,16 @@ public class BoardPanel extends JPanel {
 
 
                 //WYRYSOWANIE tablicy
-                System.out.println();
+               // System.out.println();
                 for(int y = HIDDEN_ROW_COUNT; y < ROW_COUNT; y++) {
                     for(int x = 0; x < COL_COUNT; x++) {
 
-                        System.out.print(tablica[y][x] + " ");
+                        //System.out.print(tablica[y][x] + " ");
 
-                    }System.out.println();
+                    }//System.out.println();
                 }
-                System.out.println(ghostX);
-                System.out.println(ghostY);
+               // System.out.println(ghostX);
+               // System.out.println(ghostY);
                 break;
             }
 
@@ -482,5 +498,89 @@ public class BoardPanel extends JPanel {
             g.drawLine(x + i, y, x + i, y + TILE_SIZE - i - 1);
         }
     }
+
+
+
+
+////////////////////////////////////////////////////// SCORE /////////////////////////////
+
+
+
+
+    private static int calculateHeight(int tab[][]) {
+        int height = 0;
+
+
+
+            for(int i = 0; i < 10; i++){
+                for(int j = 0; j < 21; j++){
+
+                if(tab[j][i] != 0) {
+                    height = height+ 22-j;
+
+                }
+        System.out.println("height: "+height);
+
+    }}return height;}
+
+    public static int calculateLines(int tab[][]) {
+        int clearedLines = 0;
+        for(int i = 21; i >= 0; i--) {
+            boolean isClear = true;
+
+            for(int j = 0; j <10; j++) {
+
+
+                if(tab[i][j]==0){
+                    isClear=false;
+                    break;
+                }
+            }
+            if (isClear== true){clearedLines++;}
+
+        }
+        return clearedLines;
+    }
+
+    private static int calculateHoles(int tab[][]) {
+        int holesCounter = 0;
+        for(int i = 0; i < 10; i++)
+            for(int j = 0; j < 21; j++) {
+                if(tab[j][i] != 0 && tab[j+1][i] == 0) {
+                    while(tab[j+1][i] == 0) {
+
+                        holesCounter++;
+                        j++;
+                        if (j == 21) {break;}
+                    }
+                }
+            }
+       // System.out.println(holesCounter);
+        return holesCounter;
+    }
+
+
+    public static double calculatePoints(int tab[][]){
+        calculatedHeight = calculateHeight(tab)*-20;
+        calculatedLines =calculateLines(tab)*100;
+        calculatedHoles =calculateHoles(tab)* -75;
+
+        points = calculatedHeight+calculatedLines+calculatedHoles;
+
+
+
+        return points;
+    }
+
+
+
+
+
+
+
+
+
+
+
 
 }
