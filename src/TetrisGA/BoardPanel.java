@@ -6,6 +6,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.util.Arrays;
 
 import javax.swing.JPanel;
 
@@ -26,14 +27,16 @@ public class BoardPanel extends JPanel {
     public static int ghostX;
     public static int ghostY;
 
-
+    private static double calculatedBumbines;
     private static double calculatedHeight;
     private static double calculatedLines;
     private static double calculatedHoles;
+    private static double calculatedBlockades;
     private static double points;
     private static double heightWeight;
     private static double linesWeight;
     private static double holesWeight;
+    private static double bumbinesWeight;
 
 
     static int pieceCol ;
@@ -483,104 +486,101 @@ public class BoardPanel extends JPanel {
 
 ////////////////////////////////////////////////////// SCORE /////////////////////////////
 
-
-
-
-    private static int calculateHeight(int tab[][]) {
-        int height = 0;
-
-
-
-            for(int i = 0; i < 10; i++){
-                for(int j = 0; j < 21; j++){
-
-                if(tab[j][i] != 0) {
-                    height = height+ 22-j;
-
-                }
-
-
-    }}//System.out.println("height: "+height);
-        return height;}
-
-    public static int calculateLines(int tab[][]) {
-        int clearedLines = 0;
-        for(int i = 21; i >= 0; i--) {
-            boolean isClear = true;
-
-            for(int j = 0; j <10; j++) {
-
-
-                if(tab[i][j]==0){
-                    isClear=false;
-                    break;
-                }
-            }
-            if (isClear== true){clearedLines++;}
-
-        }
-        return clearedLines;
-    }
-
+    //na 100% dobrze
     private static int calculateHoles(int tab[][]) {
         int holesCounter = 0;
         for(int i = 0; i < 10; i++)
             for(int j = 0; j < 21; j++) {
                 if(tab[j][i] != 0 && tab[j+1][i] == 0) {
                     while(tab[j+1][i] == 0) {
-
                         holesCounter++;
                         j++;
                         if (j == 21) {break;}
                     }
                 }
             }
-       // System.out.println(holesCounter);
         return holesCounter;
     }
 
-
-
-
+    //na 100% dobrze
     private static int calculateBlockades(int tab[][]) {
-        int blockadesCounter = 0;
-        for(int i = 0; i < 10; i++)
-            for(int j = 0; j < 21; j++) {
-                if(tab[j][i] != 0 && tab[j+1][i] == 0) {
-                    while(tab[j+1][i] == 0) {
-
-                        //holesCounter++;
-                        j++;
-                        if (j == 21) {break;}
+        int blockade = 0;
+        for(int i = 0; i < 10; i++){
+            for(int j = 21; j >4 ; j--) {
+                if(tab[j][i] == 0 && tab[j-1][i] != 0){
+                    for(int k = j; k>=0; k--){
+                        if (tab[k][i] != 0){
+                            blockade++;
+                        }
+                        j--;
                     }
                 }
             }
-        // System.out.println(holesCounter);
-        return blockadesCounter;
+        }
+        return blockade;
     }
 
+
+
+    private static int calculateHeight(int tab[][]) {
+        int height = 0;
+            for(int i = 0; i < 10; i++){
+                for(int j = 0; j < 21; j++){
+                    if(tab[j][i] != 0) {
+                        height = height+ 22-j;
+                    }
+                }
+            }
+        return height;
+    }
+
+
+    public static int calculateLines(int tab[][]) {
+        int clearedLines = 0;
+        for(int i = 21; i >= 0; i--) {
+            boolean isClear = true;
+            for(int j = 0; j <10; j++) {
+                if(tab[i][j]==0){
+                    isClear=false;
+                }
+            }
+            if (isClear){
+                clearedLines++;
+            }
+        }
+        return clearedLines;
+    }
+
+
+    private static int calculateBumpines(int tab[][]) {
+        int[] heights = new int[10];
+        Arrays.fill(heights, 0);
+
+        for (int i = 0; i < 10; i++)
+            for (int j = 0; j < 22; j++) {
+                if (tab[j][i] != 0) {
+                    heights[i] = 22 - j;
+                    break;
+                }
+            }
+        int bumpiness = 0;
+        for (int i = 0; i < heights.length - 1; i++) {
+            bumpiness += Math.abs(heights[i] - heights[i + 1]);
+            //System.out.print(heights[i]+" ");
+        }
+        //System.out.println();
+        return bumpiness;
+    }
 
     public static double calculatePoints(int tab[][]){
-        calculatedHeight = calculateHeight(tab)*-20;
-        calculatedLines =calculateLines(tab)*100;
-        calculatedHoles =calculateHoles(tab)* -75;
+        calculatedHeight = calculateHeight(tab)*-2;
+        calculatedLines = calculateLines(tab)*3;
+        calculatedHoles = calculateHoles(tab)* -1.5;
+        calculatedBumbines = calculateBumpines(tab)* -1;
+        calculatedBlockades = calculateBlockades(tab)*-1;
 
-        points = calculatedHeight+calculatedLines+calculatedHoles;
-
-
-
+        points = calculatedHeight+calculatedLines+calculatedHoles+ calculatedBumbines+calculatedBlockades;
         return points;
     }
-
-
-
-
-
-
-
-
-
-
-
 
 }
