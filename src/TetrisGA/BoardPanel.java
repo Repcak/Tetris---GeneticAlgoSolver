@@ -578,7 +578,7 @@ public class BoardPanel extends JPanel {
         calculatedHoles = calculateHoles(tab)* -1.5;
         calculatedBumbines = calculateBumpines(tab)* -1;
         calculatedBlockades = calculateBlockades(tab)*-1;
-
+//
         points = calculatedHeight+calculatedLines+calculatedHoles+ calculatedBumbines+calculatedBlockades;
         return points;
     }
