@@ -27,10 +27,10 @@ public class Tetris extends JFrame {
      *
      */
 
-    private double[] manualChromosome={-53.03058377600913, 62.68266280969269, -78.94624691671561, -37.47976304522061, -62.7773423060328,0};
+    private double[] manualChromosome={-2.841884818353364 ,90.33398858013996 ,-86.29884523976246, -17.97583422646018, -3.496915438232847 ,0};
 
 
-    private boolean geneticMode=true;
+    private boolean geneticMode=false;
     private int bestRotation;
     private int bestXpos;
     private double bestPoints;
@@ -504,38 +504,26 @@ public class Tetris extends JFrame {
 
                 //System.out.println("score: "+ getScore() + "genes " + BoardPanel.linesWeight );
                // startGame();
-
-
-
-            if(geneticMode) {
-
+                if(geneticMode) {
                     if (chromosomeCounter == 1) {
                         gamesCounter = geneticOperations.numberOfGames;
                         geneticOperations.getNewPopulation();
                         gamesCounter=geneticOperations.numberOfGames;
                         chromosomeCounter=geneticOperations.populationSize;
                         geneticOperations.currentChromosome=0;
-
-
                     } else if (gamesCounter == 0) {
                         geneticOperations.chromosome[geneticOperations.currentChromosome][5] /= geneticOperations.numberOfGames;
-                        System.out.println( " average score= " + geneticOperations.chromosome[geneticOperations.currentChromosome][5]);
+                        System.out.println( "Score: " + String.format("%.0f", geneticOperations.chromosome[geneticOperations.currentChromosome][5]));
                         geneticOperations.currentChromosome++;
                         gamesCounter = geneticOperations.numberOfGames;
                         chromosomeCounter--;
                     }
                     resetGame(geneticOperations.currentChromosome);
                     gamesCounter--;
-
-            }else {
-                System.out.println(" score= " + getScore());
-                resetGame(0);
-            }
-
-
-
-
-
+                }else {
+                    System.out.println("Score: " + getScore());
+                    resetGame(0);
+                }
             }
         }
         ///////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -543,23 +531,17 @@ public class Tetris extends JFrame {
         this.currentRow = currentType.getSpawnRow();
         this.currentRotation = 0;
         this.nextType = TileType.values()[random.nextInt(TYPE_COUNT)];
-
 		/*
 		 * If the spawn point is invalid, we need to pause the game and flag that we've lost
 		 * because it means that the pieces on the board have gotten too high.
          */
-
-
-
-
         bestPoints=-999999999;
         bestRotation=0;
         bestXpos=0;
         bruteForce();
 
-
         if(!isPaused && dropCooldown == 0) {
-            logicTimer.setCyclesPerSecond(250.0f);
+            logicTimer.setCyclesPerSecond(1.0f);
             boolean notOnBottom=true;
             while(notOnBottom)
             {
@@ -607,25 +589,20 @@ private boolean canMoveRight(){
 
 private void bruteForce() {
 
-
     if(testMode == true) {
         for (int i=0; i<100;i++){
             if(testMode == true) System.out.println();}
     }
 
-
     for (int Rotacje = 0; Rotacje < 4; Rotacje++) {
         if(testMode == true)  System.out.println("rotated" + currentRotation);
         currentRotation = Rotacje;
         while(canMoveLeft()){currentCol-=1;}
-
         currentCol-=1;
-
-
         while (canMoveRight()) {
-            if(testMode == true)  System.out.println("==================================================================================" );
-            if(testMode == true)   System.out.println("==================================================================================" );
-            if(testMode == true)    System.out.println("==================================================================================" );
+            if(testMode == true)  System.out.println("==================================================" );
+            if(testMode == true)  System.out.println("==================================================" );
+            if(testMode == true)  System.out.println("==================================================" );
 
             currentCol++;
 
@@ -637,12 +614,12 @@ private void bruteForce() {
                     TileType tile = BoardPanel.getTile(x, y);
                     if (tile != null) {
 
-//dodanie do tablicy normalnych klockow
+                        //dodanie do tablicy normalnych klockow
                         BoardPanel.tablica[y][x] = 1;
                         //System.out.print(tablica[x][y] + " ");
 
                     } else {
-//wpisanie do tablicy zer jezeli nie ma klocka
+                        //wpisanie do tablicy zer jezeli nie ma klocka
                         BoardPanel.tablica[y][x] = 0;
 
 
@@ -655,7 +632,6 @@ private void bruteForce() {
             ghostRow=0;
             while(canMoveDown()){
                 ghostRow+=1;
-
 
             }
             if(testMode == true) System.out.println("ROW  " + ghostRow);
@@ -680,7 +656,6 @@ private void bruteForce() {
                     }
                     if(testMode == true) System.out.println();
                 }
-
 
             if(testMode == true)   {
                 System.out.println("punkty dla tego ruchu : "+ BoardPanel.calculatePoints(BoardPanel.tablica) );
@@ -838,10 +813,8 @@ private void bruteForce() {
      * @param args Unused.
      */
     public static void main(String[] args)  throws Exception {
-        Test test = new Test();
         Tetris tetris = new Tetris();
         tetris.startGame();
 
     }
-
 }

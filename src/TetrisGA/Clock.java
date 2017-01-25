@@ -47,8 +47,10 @@ public class Clock {
      * Sets the number of cycles that elapse per second.
      * @param cyclesPerSecond The number of cycles per second.
      */
+
+    //FLOATOWA WARTOSC IM MNIEJSZA TYM SZYBCIEJ (PO PRZECINKU) WIEKSZA DLA ZWOLNIENIA GRY (100 np)
     public void setCyclesPerSecond(float cyclesPerSecond) {
-        this.millisPerCycle = (1.0f / cyclesPerSecond) * 1;
+        this.millisPerCycle = (0.0000000000000000001f / cyclesPerSecond) * 1;
     }
 
     /**
@@ -58,7 +60,9 @@ public class Clock {
      */
     public void reset() {
         this.elapsedCycles = 0;
-        this.excessCycles = 0.0f;
+
+        //DUZA WARTOSC przyspiesza, po przecinku musi byc aby zwolnic
+        this.excessCycles = 1111111111111111111111f;
         this.lastUpdate = getCurrentTime();
         this.isPaused = false;
     }
@@ -116,16 +120,6 @@ public class Clock {
         return false;
     }
 
-    /**
-     * Checks to see if a cycle has elapsed for this clock yet. Unlike
-     * {@code hasElapsedCycle}, the number of cycles will not be decremented
-     * if the number of elapsed cycles is greater than 0.
-     * @return Whether or not a cycle has elapsed.
-     * @see hasElapsedCycle
-     */
-    public boolean peekElapsedCycle() {
-        return (elapsedCycles > 0);
-    }
 
     /**
      * Calculates the current time in milliseconds using the computer's high

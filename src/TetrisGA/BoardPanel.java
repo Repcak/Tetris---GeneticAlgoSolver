@@ -521,8 +521,6 @@ public class BoardPanel extends JPanel {
         return blockade;
     }
 
-
-
     private static int calculateHeight(int tab[][]) {
         int height = 0;
             for(int i = 0; i < 10; i++){
