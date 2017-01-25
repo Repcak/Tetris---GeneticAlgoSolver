@@ -33,10 +33,11 @@ public class BoardPanel extends JPanel {
     private static double calculatedHoles;
     private static double calculatedBlockades;
     private static double points;
-    private static double heightWeight;
-    private static double linesWeight;
-    private static double holesWeight;
-    private static double bumbinesWeight;
+    public static double heightWeight;
+    public static double linesWeight;
+    public static double holesWeight;
+    public static double bumbinesWeight;
+    public static double blockadesWeight;
 
 
     static int pieceCol ;
@@ -573,11 +574,11 @@ public class BoardPanel extends JPanel {
     }
 
     public static double calculatePoints(int tab[][]){
-        calculatedHeight = calculateHeight(tab)*-2;
-        calculatedLines = calculateLines(tab)*3;
-        calculatedHoles = calculateHoles(tab)* -1.5;
-        calculatedBumbines = calculateBumpines(tab)* -1;
-        calculatedBlockades = calculateBlockades(tab)*-1;
+        calculatedHeight = calculateHeight(tab)*heightWeight;
+        calculatedLines = calculateLines(tab)*linesWeight;
+        calculatedHoles = calculateHoles(tab)* holesWeight;
+        calculatedBumbines = calculateBumpines(tab)* bumbinesWeight;
+        calculatedBlockades = calculateBlockades(tab)*blockadesWeight;
 //
         points = calculatedHeight+calculatedLines+calculatedHoles+ calculatedBumbines+calculatedBlockades;
         return points;

@@ -15,9 +15,22 @@ import javax.swing.JFrame;
  *
  */
 public class Tetris extends JFrame {
+    /**
+     *
+     *
+     *  BoardPanel.heightWeight = manualChromosome[0];
+     BoardPanel.linesWeight = manualChromosome[1];
+     BoardPanel.holesWeight = manualChromosome[2];
+     BoardPanel.bumbinesWeight = manualChromosome[3];
+     BoardPanel.blockadesWeight = manualChromosome[4];
+     *
+     *
+     */
+
+    private double[] manualChromosome={-53.03058377600913, 62.68266280969269, -78.94624691671561, -37.47976304522061, -62.7773423060328,0};
 
 
-
+    private boolean geneticMode=true;
     private int bestRotation;
     private int bestXpos;
     private double bestPoints;
@@ -25,7 +38,8 @@ public class Tetris extends JFrame {
     private int ghostRow;
     boolean testMode = false;
 
-
+    private int gamesCounter = geneticOperations.numberOfGames;
+    private int chromosomeCounter=geneticOperations.populationSize;
 
 
     /**
@@ -84,7 +98,7 @@ public class Tetris extends JFrame {
     /**
      * The clock that handles the update logic.
      */
-    private Clock logicTimer;
+    private static Clock logicTimer;
 
     /**
      * The current type of tile.
@@ -253,7 +267,7 @@ public class Tetris extends JFrame {
 				 */
                     case KeyEvent.VK_ENTER:
                         if(isGameOver || isNewGame) {
-                            resetGame();
+                            resetGame(0);
                         }
                         break;
 
@@ -292,10 +306,18 @@ public class Tetris extends JFrame {
     /**
      * Starts the game running. Initializes everything and enters the game loop.
      */
-    private void startGame() {
+    private  void startGame() {
 		/*
 		 * Initialize our random number generator, logic timer, and new game variables.
 		 */
+
+		if(geneticMode){geneticOperations.generateFirstPopulation();}else {
+            BoardPanel.heightWeight = manualChromosome[0];
+            BoardPanel.linesWeight = manualChromosome[1];
+            BoardPanel.holesWeight = manualChromosome[2];
+            BoardPanel.bumbinesWeight = manualChromosome[3];
+            BoardPanel.blockadesWeight = manualChromosome[4];
+        }
         this.random = new Random();
         this.isNewGame = true;
         this.gameSpeed = 999f;
@@ -346,6 +368,7 @@ public class Tetris extends JFrame {
                 }
             }
         }
+
     }
 
     /**
@@ -423,8 +446,10 @@ public class Tetris extends JFrame {
      * Resets the game variables to their default values at the start
      * of a new game.
      */
-    private void resetGame() {
-        this.score = 0;
+    private void resetGame(int geneNumber) {
+
+
+
         //this.gameSpeed = 3.0f;
         this.nextType = TileType.values()[random.nextInt(TYPE_COUNT)];
         this.isNewGame = false;
@@ -432,7 +457,25 @@ public class Tetris extends JFrame {
         board.clear();
         logicTimer.reset();
         logicTimer.setCyclesPerSecond(gameSpeed);
-        spawnPiece();
+
+
+
+        if(geneticMode) {
+            geneticOperations.chromosome[geneticOperations.currentChromosome][5] += score;
+            BoardPanel.heightWeight = geneticOperations.chromosome[geneNumber][0];
+            BoardPanel.linesWeight = geneticOperations.chromosome[geneNumber][1];
+            BoardPanel.holesWeight = geneticOperations.chromosome[geneNumber][2];
+            BoardPanel.bumbinesWeight = geneticOperations.chromosome[geneNumber][3];
+            BoardPanel.blockadesWeight = geneticOperations.chromosome[geneNumber][4];
+        } else {
+            BoardPanel.heightWeight = manualChromosome[0];
+            BoardPanel.linesWeight = manualChromosome[1];
+            BoardPanel.holesWeight = manualChromosome[2];
+            BoardPanel.bumbinesWeight = manualChromosome[3];
+            BoardPanel.blockadesWeight = manualChromosome[4];
+        }
+        this.score = 0;
+            spawnPiece();
     }
 
     /**
@@ -459,9 +502,40 @@ public class Tetris extends JFrame {
                 this.isGameOver = true;
                 logicTimer.setPaused(true);
 
-                System.out.println("score: "+ getScore());
+                //System.out.println("score: "+ getScore() + "genes " + BoardPanel.linesWeight );
                // startGame();
-                resetGame();
+
+
+
+            if(geneticMode) {
+
+                    if (chromosomeCounter == 1) {
+                        gamesCounter = geneticOperations.numberOfGames;
+                        geneticOperations.getNewPopulation();
+                        gamesCounter=geneticOperations.numberOfGames;
+                        chromosomeCounter=geneticOperations.populationSize;
+                        geneticOperations.currentChromosome=0;
+
+
+                    } else if (gamesCounter == 0) {
+                        geneticOperations.chromosome[geneticOperations.currentChromosome][5] /= geneticOperations.numberOfGames;
+                        System.out.println( " average score= " + geneticOperations.chromosome[geneticOperations.currentChromosome][5]);
+                        geneticOperations.currentChromosome++;
+                        gamesCounter = geneticOperations.numberOfGames;
+                        chromosomeCounter--;
+                    }
+                    resetGame(geneticOperations.currentChromosome);
+                    gamesCounter--;
+
+            }else {
+                System.out.println(" score= " + getScore());
+                resetGame(0);
+            }
+
+
+
+
+
             }
         }
         ///////////////////////////////////////////////////////////////////////////////////////////////////////
